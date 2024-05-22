@@ -7,17 +7,7 @@ import { ApiError } from '../../../utils/ApiError';
 const createProduct = asyncHandler(async (req: Request, res: Response) => {
   const productData = req.body;
 
-  console.log('productData', productData);
-
   const result = await ProductServices.createProductIntoDB(productData);
-
-  console.log('result', result);
-
-//   if (!result) {
-//     throw new ApiError(404, 'Product not found!');
-//   }
-
-//error message not working
 
   const response = new ApiResponse(
     201,
@@ -30,6 +20,10 @@ const createProduct = asyncHandler(async (req: Request, res: Response) => {
 const getAllProducts = asyncHandler(async (req: Request, res: Response) => {
   const result = await ProductServices.getAllProductsFromDB();
 
+  if (Array.isArray(result) && result.length === 0) {
+    throw new ApiError(404, 'Product not found!');
+  }
+
   const response = new ApiResponse(
     200,
     result,
@@ -41,6 +35,10 @@ const getAllProducts = asyncHandler(async (req: Request, res: Response) => {
 const getProductById = asyncHandler(async (req: Request, res: Response) => {
   const { productId } = req.params;
   const result = await ProductServices.getProductByIdFromDB(productId);
+
+  if (!result) {
+    throw new ApiError(404, 'Product not found!');
+  }
 
   const response = new ApiResponse(
     200,
