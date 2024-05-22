@@ -4,9 +4,11 @@ import { OrderServices } from './orders.service';
 import { ApiResponse } from '../../../utils/ApiResponse';
 import { ApiError } from '../../../utils/ApiError';
 import ProductModel from '../products/products.model';
+import { validateOrderByZod } from './orders.validation';
 
 const createOrder = asyncHandler(async (req: Request, res: Response) => {
-  const orderData = req.body;
+  const orderBody = req.body;
+  const orderData = validateOrderByZod(orderBody);
 
   const product = await ProductModel.findById(orderData?.productId);
 

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const orderSchema = z.object({
+const orderSchemaZod = z.object({
   email: z.string().min(1, { message: 'Email is required' }),
   productId: z.string().min(1, { message: 'Product ID is required' }),
   price: z.number().positive({ message: 'Price must be a positive number' }),
@@ -8,5 +8,5 @@ const orderSchema = z.object({
 });
 
 export const validateOrderByZod = (data: unknown) => {
-  return orderSchema.parse(data);
+  return orderSchemaZod.parse(data);
 };

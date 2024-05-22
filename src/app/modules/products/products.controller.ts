@@ -4,9 +4,12 @@ import { asyncHandler } from '../../../utils/asyncHandler';
 import { ApiResponse } from '../../../utils/ApiResponse';
 import { ApiError } from '../../../utils/ApiError';
 import { validateObjectId } from '../../../utils/validateObjectId';
+import { validateProductByZod } from './products.validation';
 
 const createProduct = asyncHandler(async (req: Request, res: Response) => {
-  const productData = req.body;
+  const productBody = req.body;
+
+  const productData = validateProductByZod(productBody);
 
   const result = await ProductServices.createProductInDB(productData);
 
