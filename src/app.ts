@@ -14,6 +14,14 @@ app.use(cors());
 app.use('/api', ProductRoutes);
 app.use('/api', OrderRoutes);
 
+//non-existing route handling middleware
+app.use((req: Request, res: Response) => {
+  res.status(404).json({
+    success: false,
+    message: 'Route not found',
+  });
+});
+
 // Error handling middleware
 app.use(errorHandler);
 
