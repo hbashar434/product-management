@@ -56,7 +56,10 @@ const updateProductById = asyncHandler(async (req: Request, res: Response) => {
 
   validateObjectId(productId);
 
-  const result = await ProductServices.updateProductInDB(productId, updateData);
+  const result = await ProductServices.updateProductByIdInDB(
+    productId,
+    updateData,
+  );
 
   if (!result) {
     throw new ApiError(404, 'Product not found!');
@@ -70,9 +73,25 @@ const updateProductById = asyncHandler(async (req: Request, res: Response) => {
   res.status(response.statusCode).json(response);
 });
 
+const deleteProductById = asyncHandler(async (req: Request, res: Response) => {
+  const { productId } = req.params;
+
+  validateObjectId(productId);
+
+  const result = await ProductServices.deleteProductByIdFromDB(productId);
+
+  if (!result) {
+    throw new ApiError(404, 'Product not found!');
+  }
+
+  const response = new ApiResponse(200, null, 'Product deleted successfully!');
+  res.status(response.statusCode).json(response);
+});
+
 export const ProductControllers = {
   createProduct,
   getAllProducts,
   getProductById,
   updateProductById,
+  deleteProductById,
 };

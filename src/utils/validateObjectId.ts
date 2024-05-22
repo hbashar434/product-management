@@ -3,6 +3,6 @@ import { ApiError } from './ApiError';
 
 export const validateObjectId = (id: string) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    throw new ApiError(400, 'Invalid product ID format!');
+    throw new ApiError(400, 'Product not found! Invalid ID!');
   }
 };
