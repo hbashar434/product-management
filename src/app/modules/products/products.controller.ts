@@ -19,7 +19,9 @@ const createProduct = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const getAllProducts = asyncHandler(async (req: Request, res: Response) => {
-  const result = await ProductServices.getAllProductsFromDB();
+  const { searchTerm } = req.query as { searchTerm?: string };
+
+  const result = await ProductServices.getAllProductsFromDB(searchTerm);
 
   if (Array.isArray(result) && result.length === 0) {
     throw new ApiError(404, 'Product not found!');
@@ -28,7 +30,7 @@ const getAllProducts = asyncHandler(async (req: Request, res: Response) => {
   const response = new ApiResponse(
     200,
     result,
-    'Products fetched successfully!',
+    `Products ${searchTerm ? `matching search term '${searchTerm}' ` : ''}fetched successfully!`,
   );
   res.status(response.statusCode).json(response);
 });
