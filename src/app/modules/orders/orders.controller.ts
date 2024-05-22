@@ -5,10 +5,13 @@ import { ApiResponse } from '../../../utils/ApiResponse';
 import { ApiError } from '../../../utils/ApiError';
 import ProductModel from '../products/products.model';
 import { validateOrderByZod } from './orders.validation';
+import { validateObjectId } from '../../../utils/validateObjectId';
 
 const createOrder = asyncHandler(async (req: Request, res: Response) => {
   const orderBody = req.body;
   const orderData = validateOrderByZod(orderBody);
+
+  validateObjectId(orderData?.productId);
 
   const product = await ProductModel.findById(orderData?.productId);
 
