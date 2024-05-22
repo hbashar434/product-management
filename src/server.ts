@@ -5,7 +5,7 @@ import config from './app/config';
 async function connectToDatabase() {
   try {
     await mongoose.connect(config.database_url as string);
-    console.log('Dtabase is connected');
+    console.log('Connected to dtabase');
   } catch (error) {
     console.error('Error connecting to database');
     throw error;
