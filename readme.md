@@ -16,7 +16,7 @@ Make sure you have the following installed on your machine:
 1. **Clone the repository:**
 
    ```bash
-   git clone git@github.com:hbashar434/product-management.git
+   git clone https://github.com/hbashar434/product-management.git
    cd product-management
    ```
 
