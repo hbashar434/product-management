@@ -26,6 +26,6 @@ const productSchema = z.object({
   inventory: inventorySchema,
 });
 
-export const validateProduct = (data: unknown) => {
+export const validateProductByZod = (data: unknown) => {
   return productSchema.parse(data);
 };

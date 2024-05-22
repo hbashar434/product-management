@@ -3,9 +3,31 @@ import { asyncHandler } from '../../../utils/asyncHandler';
 import { OrderServices } from './orders.service';
 import { ApiResponse } from '../../../utils/ApiResponse';
 import { ApiError } from '../../../utils/ApiError';
+import ProductModel from '../products/products.model';
 
 const createOrder = asyncHandler(async (req: Request, res: Response) => {
   const orderData = req.body;
+
+  const product = await ProductModel.findById(orderData?.productId);
+
+  if (!product) {
+    throw new ApiError(404, 'Product does not exist!');
+  }
+
+  if (orderData.quantity > product.inventory.quantity) {
+    throw new ApiError(400, 'Insufficient quantity available in inventory');
+  }
+
+  const updatedQuantity = product.inventory.quantity - orderData.quantity;
+  const updatedInStock = updatedQuantity > 0;
+
+  await ProductModel.findByIdAndUpdate(product._id, {
+    inventory: {
+      quantity: updatedQuantity,
+      inStock: updatedInStock,
+    },
+  });
+
   const result = await OrderServices.createOrderInDB(orderData);
 
   const response = new ApiResponse(201, result, 'Order created successfully!');
