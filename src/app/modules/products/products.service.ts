@@ -1,7 +1,7 @@
 import { Product } from './products.interface';
 import ProductModel from './products.model';
 
-const createProductIntoDB = async (data: Product) => {
+const createProductInDB = async (data: Product) => {
   const result = await ProductModel.create(data);
   return result;
 };
@@ -16,8 +16,16 @@ const getProductByIdFromDB = async (id: string) => {
   return result;
 };
 
+const updateProductInDB = async (id: string, updateData: Partial<Product>) => {
+  const result = await ProductModel.findByIdAndUpdate(id, updateData, {
+    new: true,
+  });
+  return result;
+};
+
 export const ProductServices = {
-  createProductIntoDB,
+  createProductInDB,
   getAllProductsFromDB,
   getProductByIdFromDB,
+  updateProductInDB,
 };
