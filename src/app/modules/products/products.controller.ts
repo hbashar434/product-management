@@ -18,7 +18,7 @@ const createProduct = asyncHandler(async (req: Request, res: Response) => {
     result,
     'Product created successfully!',
   );
-  res.status(response.statusCode).json(response);
+  res.status(201).json(response);
 });
 
 const getAllProducts = asyncHandler(async (req: Request, res: Response) => {
@@ -35,7 +35,7 @@ const getAllProducts = asyncHandler(async (req: Request, res: Response) => {
     result,
     `Products ${searchTerm ? `matching search term '${searchTerm}' ` : ''}fetched successfully!`,
   );
-  res.status(response.statusCode).json(response);
+  res.status(200).json(response);
 });
 
 const getProductById = asyncHandler(async (req: Request, res: Response) => {
@@ -52,7 +52,7 @@ const getProductById = asyncHandler(async (req: Request, res: Response) => {
     result,
     'Product fetched successfully!',
   );
-  res.status(response.statusCode).json(response);
+  res.status(200).json(response);
 });
 
 const updateProductById = asyncHandler(async (req: Request, res: Response) => {
@@ -75,7 +75,7 @@ const updateProductById = asyncHandler(async (req: Request, res: Response) => {
     result,
     'Product updated successfully!',
   );
-  res.status(response.statusCode).json(response);
+  res.status(200).json(response);
 });
 
 const deleteProductById = asyncHandler(async (req: Request, res: Response) => {
@@ -90,7 +90,7 @@ const deleteProductById = asyncHandler(async (req: Request, res: Response) => {
   }
 
   const response = new ApiResponse(200, null, 'Product deleted successfully!');
-  res.status(response.statusCode).json(response);
+  res.status(200).json(response);
 });
 
 export const ProductControllers = {

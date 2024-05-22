@@ -33,7 +33,7 @@ const createOrder = asyncHandler(async (req: Request, res: Response) => {
   const result = await OrderServices.createOrderInDB(orderData);
 
   const response = new ApiResponse(201, result, 'Order created successfully!');
-  res.status(response.statusCode).json(response);
+  res.status(201).json(response);
 });
 
 const getAllOrders = asyncHandler(async (req: Request, res: Response) => {
@@ -49,7 +49,7 @@ const getAllOrders = asyncHandler(async (req: Request, res: Response) => {
   }
 
   const response = new ApiResponse(200, result, 'Orders fetched successfully!');
-  res.status(response.statusCode).json(response);
+  res.status(200).json(response);
 });
 
 export const OrderControllers = {

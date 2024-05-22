@@ -7,5 +7,4 @@ router.post('/orders', OrderControllers.createOrder);
 
 router.get('/orders', OrderControllers.getAllOrders);
 
-
 export const OrderRoutes = router;
