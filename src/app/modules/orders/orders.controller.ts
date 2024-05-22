@@ -13,34 +13,22 @@ const createOrder = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const getAllOrders = asyncHandler(async (req: Request, res: Response) => {
-  const result = await OrderServices.getAllOrdersFromDB();
+  const { email } = req.query as { email?: string };
+
+  const result = await OrderServices.getAllOrdersFromDB(email);
 
   if (Array.isArray(result) && result.length === 0) {
-    throw new ApiError(404, 'Orders not found!');
+    throw new ApiError(
+      404,
+      `Orders not found ${email ? 'for this email' : ''}`,
+    );
   }
 
   const response = new ApiResponse(200, result, 'Orders fetched successfully!');
   res.status(response.statusCode).json(response);
 });
 
-const getOrdersByEmail = asyncHandler(async (req: Request, res: Response) => {
-  const { email } = req.params;
-  const result = await OrderServices.getOrdersByEmailFromDB(email);
-
-  if (Array.isArray(result) && result.length === 0) {
-    throw new ApiError(404, 'Orders not found for this email!');
-  }
-
-  const response = new ApiResponse(
-    200,
-    result,
-    'Orders fetched successfully for user email!',
-  );
-  res.status(response.statusCode).json(response);
-});
-
 export const OrderControllers = {
   createOrder,
   getAllOrders,
-  getOrdersByEmail,
 };
